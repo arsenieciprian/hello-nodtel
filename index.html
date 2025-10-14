@@ -1,1 +1,350 @@
-test
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>NodTel — SIP Trunks & Romanian DIDs</title>
+  <meta name="description" content="NodTel oferă SIP Trunks și DID-uri din România pentru operatori și companii. Conectivitate sigură (TLS + SRTP), SBC, QoS, portabilitate numerelor și acoperire națională." />
+  <link rel="canonical" href="https://nodtel.example/" />
+  <link rel="alternate" hreflang="ro" href="https://nodtel.example/" />
+  <link rel="alternate" hreflang="en" href="https://nodtel.example/en" />
+  <meta property="og:title" content="NodTel — SIP Trunks & Romanian DIDs" />
+  <meta property="og:description" content="SIP Trunks și DID-uri din România pentru operatori și companii. Securitate carrier‑grade, scalabilitate, acoperire națională." />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="ro_RO" />
+  <meta name="theme-color" content="#0f172a" />
+  <style>
+    :root{
+      --bg:#0b1020; --fg:#e6e9f2; --muted:#a2acc3; --brand:#6ee7b7; --brand2:#60a5fa; --card:#101632; --card2:#0f152d;
+      --ring:rgba(96,165,250,.45);
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0;background:linear-gradient(180deg,var(--bg),#070b17 60%);color:var(--fg);font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;line-height:1.6}
+    a{color:var(--brand2);text-decoration:none}
+    a:hover{text-decoration:underline}
+    .container{max-width:1120px;margin:0 auto;padding:24px}
+    header{position:sticky;top:0;backdrop-filter:saturate(1.2) blur(8px);background:rgba(10,15,32,.7);border-bottom:1px solid rgba(255,255,255,.06);z-index:50}
+    nav{display:flex;align-items:center;justify-content:space-between;gap:16px}
+    .logo{display:flex;align-items:center;gap:12px;font-weight:800;letter-spacing:.4px}
+    .logo-badge{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,var(--brand),var(--brand2));display:grid;place-items:center;color:#0a0f20;font-weight:900}
+    .navlinks{display:flex;gap:18px;flex-wrap:wrap}
+    .navlinks a{opacity:.9}
+    .cta{display:inline-block;background:linear-gradient(135deg,var(--brand2),var(--brand));color:#0a0f20;font-weight:700;padding:10px 16px;border-radius:12px;border:1px solid rgba(255,255,255,.08);box-shadow:0 8px 30px rgba(96,165,250,.25)}
+    .cta:hover{text-decoration:none;filter:saturate(1.1)}
+    .lang{display:flex;gap:6px;align-items:center}
+    .lang button{background:#0f152d;color:var(--fg);border:1px solid rgba(255,255,255,.08);padding:8px 10px;border-radius:10px;cursor:pointer}
+    .lang button.active{outline:2px solid var(--ring);}
+
+    .hero{padding-top:56px;padding-bottom:28px}
+    .hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:28px}
+    .hero h1{font-size:clamp(28px,4.5vw,48px);line-height:1.1;margin:12px 0}
+    .subtitle{color:var(--muted);max-width:60ch}
+    .card{background:linear-gradient(180deg,var(--card),var(--card2));border:1px solid rgba(255,255,255,.06);border-radius:18px;padding:18px}
+    .badge{display:inline-block;background:rgba(110,231,183,.18);color:var(--brand);border:1px solid rgba(110,231,183,.45);padding:6px 10px;border-radius:999px;font-size:12px;font-weight:700;letter-spacing:.4px}
+    .kp-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:16px}
+    .kp-item{border-left:3px solid var(--brand2);padding:8px 12px;background:rgba(255,255,255,.02);border-radius:12px}
+
+    section{padding:24px 0}
+    h2{font-size:clamp(22px,3.5vw,34px);margin:0 0 10px}
+    h3{margin:14px 0 6px}
+    .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:22px}
+    .col-7{grid-column:span 7}
+    .col-5{grid-column:span 5}
+    .list{margin:0;padding-left:18px}
+
+    .specs{width:100%;border-collapse:separate;border-spacing:0;overflow:hidden;border-radius:14px;border:1px solid rgba(255,255,255,.06)}
+    .specs th,.specs td{padding:12px 14px;border-bottom:1px solid rgba(255,255,255,.06)}
+    .specs tr:last-child td{border-bottom:none}
+    .specs th{background:rgba(255,255,255,.04);text-align:left}
+
+    .cta-block{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;margin-top:14px}
+
+    footer{margin-top:40px;border-top:1px solid rgba(255,255,255,.08);background:#0a0f20;padding:22px}
+    .muted{color:var(--muted)}
+
+    @media (max-width: 960px){
+      .hero-grid{grid-template-columns:1fr}
+      .kp-list{grid-template-columns:1fr}
+      .grid{grid-template-columns:1fr}
+      .col-7,.col-5{grid-column:span 1}
+    }
+
+    /* Language handling */
+    [data-lang]{display:none}
+    [data-lang][data-active="true"]{display:block}
+  </style>
+  <script>
+    function setLang(lang){
+      const buttons=document.querySelectorAll('.lang button');
+      buttons.forEach(b=>b.classList.toggle('active', b.dataset.lang===lang));
+      document.querySelectorAll('[data-lang]').forEach(el=>{
+        el.dataset.active = (el.dataset.lang===lang);
+      });
+      document.documentElement.lang = lang;
+    }
+    document.addEventListener('DOMContentLoaded',()=>{
+      const prefersEN = (navigator.language||'').toLowerCase().startsWith('en');
+      setLang(prefersEN? 'en':'ro');
+    });
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"Organization",
+    "name":"NodTel",
+    "url":"https://nodtel.example/",
+    "description":"SIP Trunks & Romanian DIDs",
+    "contactPoint": [{
+      "@type":"ContactPoint",
+      "contactType":"sales",
+      "email":"office@nodtel.com",
+      "areaServed":"RO"
+    }],
+    "sameAs": []
+  }
+  </script>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <nav aria-label="primary">
+        <div class="logo"><span class="logo-badge">NT</span> <span>NodTel</span></div>
+        <div class="navlinks">
+          <a href="#about">About</a>
+          <a href="#services">Services</a>
+          <a href="#tech">Tech</a>
+          <a href="#coverage">Coverage</a>
+          <a href="#faq">FAQ</a>
+          <a href="#contact" class="cta">Contact</a>
+        </div>
+        <div class="lang" aria-label="language">
+          <button data-lang="ro" onclick="setLang('ro')">RO</button>
+          <button data-lang="en" onclick="setLang('en')">EN</button>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="card">
+          <span class="badge" data-lang data-active="true">SIP TRUNKS • ROMANIA DIDs</span>
+          <h1 data-lang data-active="true">Conectivitate vocală carrier‑grade — SIP Trunks & DID‑uri România</h1>
+          <p class="subtitle" data-lang data-active="true">Livrăm trunk‑uri SIP și numerotație geografică / negeografică din România, cu securitate end‑to‑end (TLS + SRTP), SBC, QoS și scalabilitate pentru operatori și companii.</p>
+
+          <h1 data-lang="en">Carrier‑grade voice connectivity — SIP Trunks & Romanian DIDs</h1>
+          <p class="subtitle" data-lang="en">We deliver SIP trunks and Romanian geographic / non‑geographic DIDs with end‑to‑end security (TLS + SRTP), SBC, QoS, and elastic capacity for operators and enterprises.</p>
+
+          <div class="cta-block">
+            <a class="cta" href="#contact" data-lang data-active="true">Contactează-ne</a>
+            <a class="cta" href="#contact" data-lang="en">Contact us</a>
+            <span class="muted" data-lang data-active="true">Fără prețuri publice. Scrie-ne la <a href="mailto:office@nodtel.com">office@nodtel.com</a>.</span>
+            <span class="muted" data-lang="en">No public prices. Email <a href="mailto:office@nodtel.com">office@nodtel.com</a>.</span>
+          </div>
+        </div>
+        <div class="card">
+          <h3 data-lang data-active="true">Repere rapide</h3>
+          <h3 data-lang="en">Quick facts</h3>
+          <div class="kp-list">
+            <div class="kp-item" data-lang data-active="true">TLS + SRTP, topology hiding, anti‑fraud</div>
+            <div class="kp-item" data-lang data-active="true">SBC & NAT traversal, QoS voce</div>
+            <div class="kp-item" data-lang data-active="true">Portare numere & DID geografic / negeografic</div>
+
+            <div class="kp-item" data-lang="en">TLS + SRTP, topology hiding, anti‑fraud</div>
+            <div class="kp-item" data-lang="en">SBC & NAT traversal, Voice QoS</div>
+            <div class="kp-item" data-lang="en">Number portability & geo/non‑geo DIDs</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="container grid">
+        <div class="col-7 card">
+          <h2 data-lang data-active="true">Ce este un SIP Trunk?</h2>
+          <p data-lang data-active="true">Un SIP Trunk este o conexiune virtuală între sistemul tău de telefonie (IP‑PBX/UC) și rețeaua publică (PSTN/PLMN), bazată pe protocolul SIP. Printr‑un singur link IP poți transporta simultan mai multe apeluri, cu rute de intrare (DID‑uri) și ieșire, fără limitările liniilor TDM clasice.</p>
+          <ul class="list" data-lang data-active="true">
+            <li>Semnalizare: SIP (UDP/TCP/TLS) cu SDP pentru negocierea codec‑urilor.</li>
+            <li>Media: RTP / SRTP pentru streamurile audio; opțional RTCP pentru monitorizare calitate.</li>
+            <li>Securitate: TLS pentru semnalizare, SRTP pentru media; listă IP, autentificare digest, rate limiting, fraud detection.</li>
+            <li>Integrare: IP‑PBX, contact‑center, SBC, platforme UC.</li>
+          </ul>
+
+          <h2 data-lang="en">What is a SIP Trunk?</h2>
+          <p data-lang="en">A SIP trunk is a virtual link between your IP‑PBX/UC platform and the public networks (PSTN/PLMN), using the SIP protocol. A single IP link can carry multiple simultaneous calls, with inbound DIDs and outbound routing, avoiding the limits of legacy TDM lines.</p>
+          <ul class="list" data-lang="en">
+            <li>Signaling: SIP (UDP/TCP/TLS) with SDP for codec negotiation.</li>
+            <li>Media: RTP / SRTP for audio streams; optional RTCP for quality monitoring.</li>
+            <li>Security: TLS signaling, SRTP media; IP allow‑lists, digest auth, rate limiting, fraud detection.</li>
+            <li>Integration: IP‑PBX, contact center, SBC, UC platforms.</li>
+          </ul>
+        </div>
+        <div class="col-5 card">
+          <h2 data-lang data-active="true">Beneficii</h2>
+          <ul class="list" data-lang data-active="true">
+            <li>Calitate carrier‑grade și rutare către/ din toate rețelele interconectate.</li>
+            <li>Scalabilitate elastică (de la zeci la sute de canale simultane).</li>
+            <li>Costuri optimizate: un singur trunk, partajare de bandă, monitorizare centralizată.</li>
+            <li>Integrare UC: funcționează cu aplicații IP (softphone, contact‑center, CRM).</li>
+          </ul>
+
+          <h2 data-lang="en">Benefits</h2>
+          <ul class="list" data-lang="en">
+            <li>Carrier‑grade quality with routing to/from all interconnected networks.</li>
+            <li>Elastic scaling (from tens to hundreds of concurrent calls).</li>
+            <li>Optimized costs: single trunk, bandwidth sharing, centralized monitoring.</li>
+            <li>UC integration: works with IP apps (softphones, contact center, CRM).</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="services">
+      <div class="container grid">
+        <div class="col-7 card">
+          <h2 data-lang data-active="true">Produse & Servicii</h2>
+          <ul class="list" data-lang data-active="true">
+            <li><strong>SIP Trunks România</strong> — rutare inbound/outbound, CLI prezentat corect, suport pentru multiple Gateway-uri/registrări.</li>
+            <li><strong>DID‑uri România</strong> — numerotație geografică (prefixe locale) și negeografică; opțional portare numere existente.</li>
+            <li><strong>Conectivitate</strong> — Internet public sau tunel privat (VPN/L2) cu prioritizare voce.</li>
+            <li><strong>Suport</strong> — asistență tehnică pentru interoperabilitate cu IP‑PBX/SBC/3CX, monitorizare și alerte.</li>
+          </ul>
+
+          <h2 data-lang="en">Products & Services</h2>
+          <ul class="list" data-lang="en">
+            <li><strong>Romania SIP Trunks</strong> — inbound/outbound routing, proper CLI presentation, multi‑gateway/registrations support.</li>
+            <li><strong>Romanian DIDs</strong> — geographic (local prefixes) and non‑geographic; optional porting for existing numbers.</li>
+            <li><strong>Connectivity</strong> — public Internet or private tunnels (VPN/L2) with voice prioritization.</li>
+            <li><strong>Support</strong> — interoperability assistance for IP‑PBX/SBC/3CX, monitoring & alerts.</li>
+          </ul>
+        </div>
+        <div class="col-5 card">
+          <h2 data-lang data-active="true">Caracteristici cheie</h2>
+          <table class="specs" data-lang data-active="true">
+            <tr><th>Semnalizare</th><td>SIP UDP/TCP/TLS (recomandat TLS)</td></tr>
+            <tr><th>Media</th><td>RTP / SRTP; RTCP opțional</td></tr>
+            <tr><th>Codecuri</th><td>G.711 A/µ‑law, G.729, Opus (opțional)</td></tr>
+            <tr><th>Securitate</th><td>SBC, topology hiding, IP allow‑list, digest auth, anti‑fraud</td></tr>
+            <tr><th>NAT</th><td>Traversal prin SBC; suport SIP ALG off</td></tr>
+            <tr><th>Redundanță</th><td>Terminații multiple, failover DNS/SRV</td></tr>
+          </table>
+
+          <h2 data-lang="en">Key characteristics</h2>
+          <table class="specs" data-lang="en">
+            <tr><th>Signaling</th><td>SIP UDP/TCP/TLS (TLS recommended)</td></tr>
+            <tr><th>Media</th><td>RTP / SRTP; optional RTCP</td></tr>
+            <tr><th>Codecs</th><td>G.711 A/µ‑law, G.729, Opus (optional)</td></tr>
+            <tr><th>Security</th><td>SBC, topology hiding, IP allow‑list, digest auth, anti‑fraud</td></tr>
+            <tr><th>NAT</th><td>Traversal via SBC; SIP ALG off supported</td></tr>
+            <tr><th>Redundancy</th><td>Multiple terminations, DNS/SRV failover</td></tr>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section id="tech">
+      <div class="container card">
+        <h2 data-lang data-active="true">Arhitectură & Protocoale</h2>
+        <p data-lang data-active="true">Rețeaua este împărțită logic în domeniul privat (IP‑PBX/UC al clientului) și domeniul public (interconectarea cu PSTN/PLMN). Interfața dintre cele două este trunk‑ul SIP, protejat prin SBC. SIP gestionează semnalizarea (INVITE, BYE, REGISTER), iar RTP/SRTP transportă media. Politicile de securitate includ TLS, criptare media, limitare de rată, listă IP și detecție de anomalii.</p>
+
+        <h2 data-lang="en">Architecture & Protocols</h2>
+        <p data-lang="en">The network is logically split into a private domain (customer IP‑PBX/UC) and a public domain (interconnect with PSTN/PLMN). The SIP trunk is the interface between the two, protected by SBC. SIP handles signaling (INVITE, BYE, REGISTER) while RTP/SRTP transports media. Security policies include TLS, encrypted media, rate limiting, IP allow‑lists, and anomaly detection.</p>
+      </div>
+    </section>
+
+    <section id="coverage">
+      <div class="container grid">
+        <div class="col-7 card">
+          <h2 data-lang data-active="true">Acoperire România</h2>
+          <p data-lang data-active="true">Oferim DID‑uri geografice pentru principalele județe și municipii din România, precum și numerotație negeografică unde este aplicabil. Portarea numerelor existente este disponibilă conform reglementărilor locale.</p>
+
+          <h2 data-lang="en">Romania Coverage</h2>
+          <p data-lang="en">We provide geographic DIDs for major Romanian counties and cities, plus non‑geographic ranges where applicable. Number portability is available in line with local regulations.</p>
+        </div>
+        <div class="col-5 card">
+          <h2 data-lang data-active="true">Conformitate</h2>
+          <ul class="list" data-lang data-active="true">
+            <li>CLI corect și protecție împotriva spoofing‑ului unde e posibil.</li>
+            <li>Logare conform cerințelor legale aplicabile.</li>
+            <li>Furnizare de documentație tehnică pentru audit și interop.</li>
+          </ul>
+
+          <h2 data-lang="en">Compliance</h2>
+          <ul class="list" data-lang="en">
+            <li>Accurate CLI and anti‑spoofing where applicable.</li>
+            <li>Logging aligned with local legal requirements.</li>
+            <li>Technical documentation for audit and interop.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="faq">
+      <div class="container card">
+        <h2 data-lang data-active="true">Întrebări frecvente</h2>
+        <div data-lang data-active="true">
+          <h3>Suportați 3CX/FreePBX/CallManager?</h3>
+          <p>Da, oferim ghiduri de configurare și parametri SIP standard (proxy, autentificare, SRV, codecs, transport).</p>
+          <h3>Asigurați TLS + SRTP?</h3>
+          <p>Da, recomandăm TLS pentru semnalizare și SRTP pentru media. Cheile pot fi negociate prin SDES sau DTLS‑SRTP.</p>
+          <h3>Fax/T.38?</h3>
+          <p>Suportăm T.38 acolo unde este disponibil; alternativ G.711 pass‑through.</p>
+          <h3>Failover & redundanță?</h3>
+          <p>Suport pentru DNS SRV/A, multiple IP-uri de terminare și politici de failover pe IP‑PBX/SBC.</p>
+        </div>
+
+        <h2 data-lang="en">FAQ</h2>
+        <div data-lang="en">
+          <h3>Do you support 3CX/FreePBX/CallManager?</h3>
+          <p>Yes — we provide configuration guides and standard SIP parameters (proxy, auth, SRV, codecs, transport).</p>
+          <h3>Do you offer TLS + SRTP?</h3>
+          <p>Yes, we recommend TLS for signaling and SRTP for media. Keys can be negotiated via SDES or DTLS‑SRTP.</p>
+          <h3>Fax/T.38?</h3>
+          <p>T.38 is supported where available; otherwise G.711 pass‑through.</p>
+          <h3>Failover & redundancy?</h3>
+          <p>Support for DNS SRV/A, multiple termination IPs, and PBX/SBC failover policies.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="container card">
+        <h2 data-lang data-active="true">Contact</h2>
+        <p data-lang data-active="true">Ai o cerință tehnică sau vrei o ofertă personalizată? Trimite‑ne un email la <a href="mailto:office@nodtel.com">office@nodtel.com</a> cu următoarele informații (dacă sunt disponibile):</p>
+        <ul class="list" data-lang data-active="true">
+          <li>Tip platformă (IP‑PBX/SBC/3CX/CCaaS)</li>
+          <li>Număr estimat de canale simultane</li>
+          <li>Necesități de numerotație (geo / negeo / portări)</li>
+          <li>Preferințe securitate (TLS/SRTP, VPN etc.)</li>
+          <li>Adrese IP/ASN pentru interconectare</li>
+        </ul>
+
+        <h2 data-lang="en">Contact</h2>
+        <p data-lang="en">Have a technical requirement or want a tailored offer? Email <a href="mailto:office@nodtel.com">office@nodtel.com</a> with the details below (if available):</p>
+        <ul class="list" data-lang="en">
+          <li>Platform type (IP‑PBX/SBC/3CX/CCaaS)</li>
+          <li>Estimated concurrent calls</li>
+          <li>Numbering needs (geo / non‑geo / porting)</li>
+          <li>Security preferences (TLS/SRTP, VPN, etc.)</li>
+          <li>IP addresses/ASN for interconnect</li>
+        </ul>
+
+        <div class="cta-block">
+          <a class="cta" href="mailto:office@nodtel.com" data-lang data-active="true">Trimite-ne un email</a>
+          <a class="cta" href="mailto:office@nodtel.com" data-lang="en">Email us</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="muted" data-lang data-active="true">Folosim infrastructura <strong>Voxbee</strong> pentru servicii de telefonie.</div>
+      <div class="muted" data-lang="en">We use <strong>Voxbee</strong> infrastructure for telephony services.</div>
+      <div class="muted" style="margin-top:8px">© <span id="y"></span> NodTel • SIP Trunks & Romanian DIDs</div>
+    </div>
+    <script>document.getElementById('y').textContent = new Date().getFullYear();</script>
+  </footer>
+</body>
+</html>
