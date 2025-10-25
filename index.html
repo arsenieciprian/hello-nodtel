@@ -3,14 +3,13 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  
   <title>NodTel — SIP Trunks & Numere (DID) România | Soluții Voce B2B</title>
   <meta name="description" content="NodTel oferă SIP Trunks și numere (DID) din România pentru companii și operatori. Fiabilitate carrier-grade, securitate avansată (TLS/SRTP) și suport tehnic specializat." />
+  
   <link rel="canonical" href="https://nodtel.example/" />
-  <meta property="og:title" content="NodTel — SIP Trunks & Numere (DID) România" />
-  <meta property="og:description" content="Conectivitate vocală B2B de top. Oferim SIP Trunks securizate, numere naționale și portabilitate pentru centrale IP-PBX, 3CX și platforme de operator." />
   <meta property="og:type" content="website" />
-  <meta property="og:locale" content="ro_RO" />
-  <meta name="theme-color" content="#0f172a" />
+  <meta property="og:locale" content="ro_RO" /> <meta name="theme-color" content="#0f172a" />
   <style>
     :root{
       --bg:#0b1020; --fg:#e6e9f2; --muted:#a2acc3; --brand:#6ee7b7; --brand2:#60a5fa; --card:#101632; --card2:#0f152d; --ring:rgba(96,165,250,.45);
@@ -26,9 +25,23 @@
     nav{display:flex;align-items:center;justify-content:space-between;gap:16px}
     .logo{display:flex;align-items:center;gap:12px;font-weight:800;letter-spacing:.4px}
     .logo-badge{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,var(--brand),var(--brand2));display:grid;place-items:center;color:#0a0f20;font-weight:900}
-    .navlinks{display:flex;gap:18px;flex-wrap:wrap;font-size:0.95rem}
+    .navlinks{display:flex;align-items:center;gap:18px;flex-wrap:wrap;font-size:0.95rem}
     .navlinks a{opacity:.9;font-weight:500}
     
+    /* Stil pentru noul comutator de limbă */
+    #lang-switcher {
+      background: rgba(255,255,255,.1);
+      border: 1px solid rgba(255,255,255,.2);
+      color: var(--fg);
+      padding: 8px 14px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 0.9rem;
+      margin-left: 10px;
+    }
+    #lang-switcher:hover { background: rgba(255,255,255,.2); }
+
     .cta{display:inline-block;background:linear-gradient(135deg,var(--brand2),var(--brand));color:#0a0f20;font-weight:700;padding:12px 20px;border-radius:12px;border:1px solid rgba(255,255,255,.08);box-shadow:0 8px 30px rgba(96,165,250,.25);font-size: 1rem;}
     .cta:hover{text-decoration:none;filter:saturate(1.15) brightness(1.05);transform: translateY(-1px);}
 
@@ -51,6 +64,7 @@
     .section-title p{font-size: 1.1rem; color: var(--muted); margin-top: -10px;}
 
     .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:24px}
+    .col-12{grid-column:span 12}
     .col-7{grid-column:span 7}
     .col-5{grid-column:span 5}
     .col-6{grid-column:span 6}
@@ -58,29 +72,39 @@
     .list li{margin-bottom: 10px;}
     .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;background:rgba(255,255,255,.04);padding:14px;border-radius:12px;overflow:auto;font-size:0.9rem;border: 1px solid rgba(255,255,255,.06);}
 
-    .specs{width:100%;border-collapse:separate;border-spacing:0;overflow:hidden;border-radius:14px;border:1px solid rgba(255,255,255,.06)}
-    .specs th,.specs td{padding:12px 14px;border-bottom:1px solid rgba(255,255,255,.06)}
-    .specs tr:last-child td{border-bottom:none}
-    .specs th{background:rgba(255,255,255,.04);text-align:left}
-
-    .cta-block{margin-top:24px}
-
     section#faq h3 {font-size: 1.25rem; color: var(--brand); margin-top: 28px; margin-bottom: 8px;}
     section#faq p {color: var(--muted); margin: 0 0 12px;}
 
+    section#contact .contact-grid{display: grid; grid-template-columns: 2fr 1.5fr; gap: 24px;}
     section#contact ul { background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.08); padding: 24px 24px 24px 42px; border-radius: 12px; }
     section#contact .cta-block {text-align: center; margin-top: 32px;}
     section#contact .cta {padding: 14px 28px; font-size: 1.1rem;}
 
     footer{margin-top:40px;border-top:1px solid rgba(255,255,255,.08);background:#0a0f20;padding:28px}
     .muted{color:var(--muted)}
+    
+    /* REGULI CSS PENTRU SISTEMUL DE LIMBĂ 
+      Ascunde limba care NU este activă.
+    */
+    
+    /* Implicit, ascunde engleza dacă limba NU e setată pe 'en' */
+    html:not([lang="en"]) .lang-en { display: none; }
+    
+    /* Ascunde româna dacă limba e setată pe 'en' */
+    html[lang="en"] .lang-ro { display: none; }
+
+    /* Fix pentru elemente block (ca <li> sau <div>) care devin inline */
+    /* Puteți adăuga .lang-ro, .lang-en la elementele părinte (ex. <li class="lang-ro">) */
+    /* Dar pentru span-uri interioare, e ok așa */
+
 
     @media (max-width: 1024px){
       .hero-grid{grid-template-columns:1fr}
       .kp-list{grid-template-columns:1fr}
       .grid{grid-template-columns:1fr}
-      .col-7,.col-5,.col-6{grid-column:span 1}
-      .navlinks{display: none} /* Meniu simplu pe mobil, pt demo */
+      .col-12,.col-7,.col-5,.col-6{grid-column:span 1}
+      .navlinks{display: none} /* Meniu simplu pe mobil, pt demo. Puteți implementa un meniu burger */
+      section#contact .contact-grid{grid-template-columns: 1fr;}
     }
   </style>
 </head>
@@ -89,15 +113,18 @@
     <div class="container">
       <nav aria-label="primary">
         <a href="#home" class="logo"><span class="logo-badge">NT</span> <span>NodTel</span></a>
+        
         <div class="navlinks">
-          <a href="#pentru-cine">Pentru Cine</a>
-          <a href="#despre-noi">De ce NodTel</a>
-          <a href="#servicii">Servicii</a>
-          <a href="#tehnic">Tehnic</a>
+          <a href="#pentru-cine"><span class="lang-ro">Pentru Cine</span><span class="lang-en">For Whom</span></a>
+          <a href="#despre-noi"><span class="lang-ro">De ce NodTel</span><span class="lang-en">Why NodTel</span></a>
+          <a href="#servicii"><span class="lang-ro">Servicii</span><span class="lang-en">Services</span></a>
+          <a href="#tehnic"><span class="lang-ro">Tehnic</span><span class="lang-en">Technical</span></a>
           <a href="#faq">FAQ</a>
-          <a href="#contact" class="cta">Contact</a>
+          <button id="lang-switcher" aria-label="Schimbă limba / Change language">EN</button>
+          <a href="#contact" class="cta"><span class="lang-ro">Contact</span><span class="lang-en">Contact</span></a>
         </div>
-      </nav>
+        
+        </nav>
     </div>
   </header>
 
@@ -105,22 +132,64 @@
     <section class="hero" id="home">
       <div class="container hero-grid">
         <div class="card">
-          <span class="badge">SOLUȚII VOCE B2B PENTRU ROMÂNIA</span>
-          <h1>Partenerul Dvs. Strategic pentru SIP Trunks & Numere (DID)</h1>
-          <p class="subtitle">Conectăm afacerea dvs. la rețeaua globală de telefonie cu fiabilitate de nivel carrier, securitate avansată și suport tehnic specializat.</p>
-          <p class="subtitle" style="font-size: 1rem; margin-top: 16px;"><strong>[EN]</strong> We connect your business to the global voice network with carrier-grade reliability, advanced security, and expert technical support.</p>
+          <span class="badge">
+            <span class="lang-ro">SOLUȚII VOCE B2B PENTRU ROMÂNIA</span>
+            <span class="lang-en">B2B VOICE SOLUTIONS FOR ROMANIA</span>
+          </span>
+          <h1>
+            <span class="lang-ro">Partenerul Dvs. Strategic pentru SIP Trunks & Numere (DID)</span>
+            <span class="lang-en">Your Strategic Partner for SIP Trunks & Romanian DIDs</span>
+          </h1>
+          <p class="subtitle">
+            <span class="lang-ro">Conectăm afacerea dvs. la rețeaua globală de telefonie cu fiabilitate de nivel carrier, securitate avansată și suport tehnic specializat.</span>
+            <span class="lang-en">We connect your business to the global voice network with carrier-grade reliability, advanced security, and expert technical support.</span>
+          </p>
           
           <div class="cta-block">
-            <a class="cta" href="#contact">Discutați cu un expert / Speak to an expert</a>
+            <a class="cta" href="#contact">
+              <span class="lang-ro">Discutați cu un expert</span>
+              <span class="lang-en">Speak to an expert</span>
+            </a>
           </div>
         </div>
         <div class="card">
-          <h3>De ce să ne alegeți? / Why choose us?</h3>
+          <h3>
+            <span class="lang-ro">De ce să ne alegeți?</span>
+            <span class="lang-en">Why choose us?</span>
+          </h3>
           <div class="kp-list">
-            <div class="kp-item"><strong>FIABILITATE CARRIER-GRADE</strong> Infrastructură redundantă, monitorizare 24/7 și QoS (DSCP EF) pentru cea mai bună calitate vocală.</div>
-            <div class="kp-item"><strong>SECURITATE AVANSATĂ</strong> Protecție by-default cu TLS + SRTP, topology hiding și mecanisme active anti-fraudă.</div>
-            <div class="kp-item"><strong>ACOPERIRE NAȚIONALĂ</strong> Numere (DID) geografice și naționale. Proces facil de portare a numerelor existente.</div>
-            <div class="kp-item"><strong>SUPORT SPECIALIZAT</strong> Acces direct la ingineri cu experiență în VoIP, gata să rezolve orice problemă de interconectare.</div>
+            <div class="kp-item">
+              <strong>
+                <span class="lang-ro">FIABILITATE CARRIER-GRADE</span>
+                <span class="lang-en">CARRIER-GRADE RELIABILITY</span>
+              </strong>
+              <span class="lang-ro">Infrastructură redundantă, monitorizare 24/7 și QoS (DSCP EF) pentru cea mai bună calitate vocală.</span>
+              <span class="lang-en">Redundant infrastructure, 24/7 monitoring, and QoS (DSCP EF) for the best voice quality.</span>
+            </div>
+            <div class="kp-item">
+              <strong>
+                <span class="lang-ro">SECURITATE AVANSATĂ</span>
+                <span class="lang-en">ADVANCED SECURITY</span>
+              </strong>
+              <span class="lang-ro">Protecție by-default cu TLS + SRTP, topology hiding și mecanisme active anti-fraudă.</span>
+              <span class="lang-en">By-default protection with TLS + SRTP, topology hiding, and active anti-fraud mechanisms.</span>
+            </div>
+            <div class="kp-item">
+              <strong>
+                <span class="lang-ro">ACOPERIRE NAȚIONALĂ</span>
+                <span class="lang-en">NATIONAL COVERAGE</span>
+              </strong>
+              <span class="lang-ro">Numere (DID) geografice și naționale. Proces facil de portare a numerelor existente.</span>
+              <span class="lang-en">Geographic and national DIDs. Easy port-in process for your existing numbers.</span>
+            </div>
+            <div class="kp-item">
+              <strong>
+                <span class="lang-ro">SUPORT SPECIALIZAT</span>
+                <span class="lang-en">EXPERT SUPPORT</span>
+              </strong>
+              <span class="lang-ro">Acces direct la ingineri cu experiență în VoIP, gata să rezolve orice problemă de interconectare.</span>
+              <span class="lang-en">Direct access to experienced VoIP engineers, ready to solve any interconnection issue.</span>
+            </div>
           </div>
         </div>
       </div>
@@ -129,19 +198,35 @@
     <section id="pentru-cine">
       <div class="container">
         <div class="section-title">
-          <h2>Soluții adaptate nevoilor Dvs.</h2>
-          <p>Indiferent dacă sunteți o companie în creștere sau un operator de telecomunicații, avem infrastructura potrivită.</p>
+          <h2>
+            <span class="lang-ro">Soluții adaptate nevoilor Dvs.</span>
+            <span class="lang-en">Solutions Tailored to Your Needs</span>
+          </h2>
+          <p>
+            <span class="lang-ro">Indiferent dacă sunteți o companie în creștere sau un operator de telecomunicații, avem infrastructura potrivită.</span>
+            <span class="lang-en">Whether you are a growing company or a telecommunications operator, we have the right infrastructure.</span>
+          </p>
         </div>
         <div class="grid">
           <div class="col-6 card">
-            <h3>Pentru Companii & Centre de Contact</h3>
-            <p><strong>[RO]</strong> Înlocuiți vechile linii ISDN sau analogice cu un SIP Trunk flexibil și scalabil. Reduceți costurile, adăugați noi numere (DID-uri) instant și beneficiați de o calitate a vocii impecabilă pentru centrala dvs. IP-PBX, 3CX, Asterisk sau platforma de Contact Center (CCaaS). Vă ajutăm cu configurarea și interoperabilitatea.</p>
-            <p class="muted"><strong>[EN] For Enterprises & Contact Centers</strong><br>Replace legacy ISDN or analog lines with a flexible, scalable SIP Trunk. Reduce costs, add new DIDs instantly, and get impeccable voice quality for your IP-PBX, 3CX, Asterisk, or Contact Center (CCaaS) platform. We assist with configuration and interoperability.</p>
+            <h3>
+              <span class="lang-ro">Pentru Companii & Centre de Contact</span>
+              <span class="lang-en">For Enterprises & Contact Centers</span>
+            </h3>
+            <p>
+              <span class="lang-ro">Înlocuiți vechile linii ISDN sau analogice cu un SIP Trunk flexibil și scalabil. Reduceți costurile, adăugați noi numere (DID-uri) instant și beneficiați de o calitate a vocii impecabilă pentru centrala dvs. IP-PBX, 3CX, Asterisk sau platforma de Contact Center (CCaaS). Vă ajutăm cu configurarea și interoperabilitatea.</span>
+              <span class="lang-en">Replace legacy ISDN or analog lines with a flexible, scalable SIP Trunk. Reduce costs, add new DIDs instantly, and get impeccable voice quality for your IP-PBX, 3CX, Asterisk, or Contact Center (CCaaS) platform. We assist with configuration and interoperability.</span>
+            </p>
           </div>
           <div class="col-6 card">
-            <h3>Pentru Operatori & Furnizori de Servicii</h3>
-            <p><strong>[RO]</strong> Extindeți-vă acoperirea în România. Oferim interconectare (NNI) robustă la nivel de operator, capabilă să gestioneze volume mari de apeluri, cu rutare avansată și protocoale de securitate de top. Beneficiați de infrastructura noastră SBC și de suport pentru topologii complexe și rate-limiting.</p>
-            <p class="muted"><strong>[EN] For Operators & Service Providers</strong><br>Expand your footprint in Romania. We provide robust, carrier-level interconnection (NNI) handling high call volumes, advanced routing, and top-tier security protocols. Leverage our SBC infrastructure and support for complex topologies and rate-limiting.</p>
+            <h3>
+              <span class="lang-ro">Pentru Operatori & Furnizori de Servicii</span>
+              <span class="lang-en">For Operators & Service Providers</span>
+            </h3>
+            <p>
+              <span class="lang-ro">Extindeți-vă acoperirea în România. Oferim interconectare (NNI) robustă la nivel de operator, capabilă să gestioneze volume mari de apeluri, cu rutare avansată și protocoale de securitate de top. Beneficiați de infrastructura noastră SBC și de suport pentru topologii complexe și rate-limiting.</span>
+              <span class="lang-en">Expand your footprint in Romania. We provide robust, carrier-level interconnection (NNI) handling high call volumes, advanced routing, and top-tier security protocols. Leverage our SBC infrastructure and support for complex topologies and rate-limiting.</span>
+            </p>
           </div>
         </div>
       </div>
@@ -149,41 +234,79 @@
 
     <section id="despre-noi">
       <div class="container grid">
-        <div class="col-6 card">
-          <h2>Excelență în Conectivitate Vocală [RO]</h2>
-          <p>La NodTel, nu livrăm doar minute. Livrăm fiabilitate. Suntem specialiști în infrastructura de voce IP și înțelegem complexitatea din spatele fiecărui apel. Rețeaua noastră este construită pe o arhitectură redundantă, geo-distribuită, securizată prin Session Border Controllers (SBC) de ultimă generație și monitorizată 24/7/365.</p>
-          <p>Alegând NodTel, alegeți un partener tehnic dedicat succesului comunicațiilor dvs. Oferim mai mult decât un simplu link – oferim expertiză, suport proactiv și o platformă pe care vă puteți baza.</p>
-        </div>
-        <div class="col-6 card">
-          <h2>Excellence in Voice Connectivity [EN]</h2>
-          <p>At NodTel, we don't just deliver minutes. We deliver reliability. We are specialists in IP voice infrastructure and understand the complexity behind every call. Our network is built on a redundant, geo-distributed architecture, secured by next-generation Session Border Controllers (SBCs), and monitored 24/7/365.</p>
-          <p>By choosing NodTel, you choose a technical partner dedicated to your communications' success. We offer more than just a connection – we provide expertise, proactive support, and a platform you can rely on.</p>
+        <div class="col-12 card">
+          <h2>
+            <span class="lang-ro">Excelență în Conectivitate Vocală</span>
+            <span class="lang-en">Excellence in Voice Connectivity</span>
+          </h2>
+          <p>
+            <span class="lang-ro">La NodTel, nu livrăm doar minute. Livrăm fiabilitate. Suntem specialiști în infrastructura de voce IP și înțelegem complexitatea din spatele fiecărui apel. Rețeaua noastră este construită pe o arhitectură redundantă, geo-distribuită, securizată prin Session Border Controllers (SBC) de ultimă generație și monitorizată 24/7/365.</span>
+            <span class="lang-en">At NodTel, we don't just deliver minutes. We deliver reliability. We are specialists in IP voice infrastructure and understand the complexity behind every call. Our network is built on a redundant, geo-distributed architecture, secured by next-generation Session Border Controllers (SBCs), and monitored 24/7/365.</span>
+          </p>
+          <p>
+            <span class="lang-ro">Alegând NodTel, alegeți un partener tehnic dedicat succesului comunicațiilor dvs. Oferim mai mult decât un simplu link – oferim expertiză, suport proactiv și o platformă pe care vă puteți baza.</span>
+            <span class="lang-en">By choosing NodTel, you choose a technical partner dedicated to your communications' success. We offer more than just a connection – we provide expertise, proactive support, and a platform you can rely on.</span>
+          </p>
         </div>
       </div>
     </section>
 
     <section id="servicii">
       <div class="container grid">
-        <div class="col-7 card">
-          <h2>Servicii & Capabilități Cheie [RO]</h2>
+        <div class="col-12 card">
+          <h2>
+            <span class="lang-ro">Servicii & Capabilități Cheie</span>
+            <span class="lang-en">Key Services & Capabilities</span>
+          </h2>
           <ul class="list">
-            <li><strong>SIP Trunks de Înaltă Performanță:</strong> Conectivitate inbound și outbound scalabilă, cu politici de rutare flexibile și prezentare corectă a identității (CLI). Interoperabilitate garantată cu platforme majore (3CX, FreePBX, Asterisk, Cisco, etc.).</li>
-            <li><strong>Numerotație Națională (DID-uri):</strong> Oferim o gamă largă de numere geografice (ex. 021, 031, 02xx) și negeografice (037x) pentru prezența dvs. în România.</li>
-            <li><strong>Portabilitate Facilă a Numerelor:</strong> Păstrați-vă numerele de telefon existente. Gestionăm întregul proces de portare (LOA, cut-over) rapid și fără bătăi de cap, asigurând zero întreruperi ale serviciului.</li>
-            <li><strong>Securitate și Anti-Fraudă:</strong> Protecție robustă cu TLS pentru semnalizare și SRTP pentru criptarea apelurilor. Platforma noastră include mecanisme avansate anti-fraudă, topology hiding și rate limiting per client.</li>
-            <li><strong>Numere Scurte și Servicii Speciale:</strong> Alocare și rutare pentru numere scurte (ex. 12xx, 9xxx) și servicii cu valoare adăugată, conform reglementărilor ANCOM.</li>
-            <li><strong>Conectivitate Flexibilă:</strong> Oferim servicii "Over-the-Top" (OTT) peste internetul public sau interconectări private dedicate (VPN, L2) cu prioritizare voce (QoS).</li>
-          </ul>
-        </div>
-        <div class="col-5 card">
-          <h2>Key Services & Capabilities [EN]</h2>
-          <ul class="list">
-            <li><strong>High-Performance SIP Trunks:</strong> Scalable inbound and outbound connectivity with flexible routing policies and correct CLI presentation. Guaranteed interoperability with major platforms (3CX, FreePBX, Asterisk, Cisco, etc.).</li>
-            <li><strong>National Numbering (DIDs):</strong> We offer a wide range of geographic (e.g., 021, 031, 02xx) and non-geographic (037x) numbers for your presence in Romania.</li>
-            <li><strong>Seamless Number Portability:</strong> Keep your existing phone numbers. We manage the entire porting process (LOA, cut-over) quickly and seamlessly, ensuring zero service disruption.</li>
-            <li><strong>Security & Anti-Fraud:</strong> Robust protection with TLS for signaling and SRTP for call encryption. Our platform includes advanced anti-fraud mechanisms, topology hiding, and per-client rate limiting.</li>
-            <li><strong>Short Codes & Special Services:</strong> Allocation and routing for short codes (e.g., 12xx, 9xxx) and value-added services, compliant with ANCOM regulations.</li>
-            <li><strong>Flexible Connectivity:</strong> We provide "Over-the-Top" (OTT) services via the public internet or dedicated private interconnects (VPN, L2) with voice prioritization (QoS).</li>
+            <li>
+              <strong>
+                <span class="lang-ro">SIP Trunks de Înaltă Performanță:</span>
+                <span class="lang-en">High-Performance SIP Trunks:</span>
+              </strong>
+              <span class="lang-ro"> Conectivitate inbound și outbound scalabilă, cu politici de rutare flexibile și prezentare corectă a identității (CLI). Interoperabilitate garantată cu platforme majore (3CX, FreePBX, Asterisk, Cisco, etc.).</span>
+              <span class="lang-en"> Scalable inbound and outbound connectivity with flexible routing policies and correct CLI presentation. Guaranteed interoperability with major platforms (3CX, FreePBX, Asterisk, Cisco, etc.).</span>
+            </li>
+            <li>
+              <strong>
+                <span class="lang-ro">Numerotație Națională (DID-uri):</span>
+                <span class="lang-en">National Numbering (DIDs):</span>
+              </strong>
+              <span class="lang-ro"> Oferim o gamă largă de numere geografice (ex. 021, 031, 02xx) și negeografice (037x) pentru prezența dvs. în România.</span>
+              <span class="lang-en"> We offer a wide range of geographic (e.g., 021, 031, 02xx) and non-geographic (037x) numbers for your presence in Romania.</span>
+            </li>
+            <li>
+              <strong>
+                <span class="lang-ro">Portabilitate Facilă a Numerelor:</span>
+                <span class="lang-en">Seamless Number Portability:</span>
+              </strong>
+              <span class="lang-ro"> Păstrați-vă numerele de telefon existente. Gestionăm întregul proces de portare (LOA, cut-over) rapid și fără bătăi de cap, asigurând zero întreruperi ale serviciului.</span>
+              <span class="lang-en"> Keep your existing phone numbers. We manage the entire porting process (LOA, cut-over) quickly and seamlessly, ensuring zero service disruption.</span>
+            </li>
+            <li>
+              <strong>
+                <span class="lang-ro">Securitate și Anti-Fraudă:</span>
+                <span class="lang-en">Security & Anti-Fraud:</span>
+              </strong>
+              <span class="lang-ro"> Protecție robustă cu TLS pentru semnalizare și SRTP pentru criptarea apelurilor. Platforma noastră include mecanisme avansate anti-fraudă, topology hiding și rate limiting per client.</span>
+              <span class="lang-en"> Robust protection with TLS for signaling and SRTP for call encryption. Our platform includes advanced anti-fraud mechanisms, topology hiding, and per-client rate limiting.</span>
+            </li>
+            <li>
+              <strong>
+                <span class="lang-ro">Numere Scurte și Servicii Speciale:</span>
+                <span class="lang-en">Short Codes & Special Services:</span>
+              </strong>
+              <span class="lang-ro"> Alocare și rutare pentru numere scurte (ex. 12xx, 9xxx) și servicii cu valoare adăugată, conform reglementărilor ANCOM.</span>
+              <span class="lang-en"> Allocation and routing for short codes (e.g., 12xx, 9xxx) and value-added services, compliant with ANCOM regulations.</span>
+            </li>
+            <li>
+              <strong>
+                <span class="lang-ro">Conectivitate Flexibilă:</span>
+                <span class="lang-en">Flexible Connectivity:</span>
+              </strong>
+              <span class="lang-ro"> Oferim servicii "Over-the-Top" (OTT) peste internetul public sau interconectări private dedicate (VPN, L2) cu prioritizare voce (QoS).</span>
+              <span class="lang-en"> We provide "Over-the-Top" (OTT) services via the public internet or dedicated private interconnects (VPN, L2) with voice prioritization (QoS).</span>
+            </li>
           </ul>
         </div>
       </div>
@@ -192,56 +315,74 @@
     <section id="tehnic">
       <div class="container">
         <div class="section-title">
-          <h2>Specificații Tehnice / Technical Deep Dive</h2>
-          <p>Pentru ingineri: detaliile care fac diferența. Arhitectura noastră este modernă, sigură și conformă RFC.</p>
+          <h2>
+            <span class="lang-ro">Specificații Tehnice</span>
+            <span class="lang-en">Technical Deep Dive</span>
+          </h2>
+          <p>
+            <span class="lang-ro">Pentru ingineri: detaliile care fac diferența. Arhitectura noastră este modernă, sigură și conformă RFC.</span>
+            <span class="lang-en">For engineers: the details that make the difference. Our architecture is modern, secure, and RFC-compliant.</span>
+          </p>
         </div>
         <div class="grid">
           <div class="col-6 card">
-            <h3>Ce este un SIP Trunk? [RO]</h3>
-            <p>Un SIP Trunk este o interfață logică între domeniul privat (IP-PBX/UC) și domeniul public (PSTN/PLMN), bazată pe SIP pentru semnalizare și RTP/SRTP pentru media. Un singur link IP poate transporta simultan zeci sau sute de apeluri, cu DID-uri pentru intrare și rutare controlată pentru ieșire.</p>
+            <h3>
+              <span class="lang-ro">Ce este un SIP Trunk?</span>
+              <span class="lang-en">What is a SIP Trunk?</span>
+            </h3>
+            <p>
+              <span class="lang-ro">Un SIP Trunk este o interfață logică între domeniul privat (IP-PBX/UC) și domeniul public (PSTN/PLMN), bazată pe SIP pentru semnalizare și RTP/SRTP pentru media. Un singur link IP poate transporta simultan zeci sau sute de apeluri.</span>
+              <span class="lang-en">A SIP trunk is the logical interface between the private domain (IP-PBX/UC) and the public domain (PSTN/PLMN), using SIP for signaling and RTP/SRTP for media. A single IP link can carry dozens or hundreds of calls concurrently.</span>
+            </p>
             <ul class="list">
-              <li><strong>Semnalizare:</strong> SIP (UDP/TCP/TLS), mesaje INVITE/ACK/BYE/CANCEL/REGISTER/OPTIONS/UPDATE/PRACK/REFER.</li>
-              <li><strong>Media:</strong> RTP/SRTP, RTCP pentru măsurarea calității; suport pentru re-INVITE (hold, schimbare codec).</li>
-              <li><strong>Identitate:</strong> P-Asserted-Identity (PAI), From/To, Privacy; prezentare CLI corectă conform E.164.</li>
+              <li>
+                <span class="lang-ro"><strong>Semnalizare:</strong> SIP (UDP/TCP/TLS), INVITE/ACK/BYE etc.</span>
+                <span class="lang-en"><strong>Signaling:</strong> SIP (UDP/TCP/TLS), INVITE/ACK/BYE etc.</span>
+              </li>
+              <li>
+                <span class="lang-ro"><strong>Media:</strong> RTP/SRTP, RTCP, re-INVITE (hold, codec change).</span>
+                <span class="lang-en"><strong>Media:</strong> RTP/SRTP, RTCP, re-INVITE (hold, codec change).</span>
+              </li>
+              <li>
+                <span class="lang-ro"><strong>Identitate:</strong> P-Asserted-Identity (PAI), Privacy, CLI E.164.</span>
+                <span class="lang-en"><strong>Identity:</strong> P-Asserted-Identity (PAI), Privacy, E.164 CLI.</span>
+              </li>
             </ul>
           </div>
           <div class="col-6 card">
-            <h3>What is a SIP Trunk? [EN]</h3>
-            <p>A SIP trunk is the logical interface between the private domain (IP-PBX/UC) and the public domain (PSTN/PLMN), using SIP for signaling and RTP/SRTP for media. A single IP link can carry dozens or hundreds of calls concurrently, with inbound DIDs and controlled outbound routing.</p>
+            <h3>
+              <span class="lang-ro">Arhitectură & Protocoale</span>
+              <span class="lang-en">Architecture & Protocols</span>
+            </h3>
             <ul class="list">
-              <li><strong>Signaling:</strong> SIP (UDP/TCP/TLS), methods INVITE/ACK/BYE/CANCEL/REGISTER/OPTIONS/UPDATE/PRACK/REFER.</li>
-              <li><strong>Media:</strong> RTP/SRTP, RTCP for quality; supports re-INVITE (hold, codec change).</li>
-              <li><strong>Identity:</strong> P-Asserted-Identity (PAI), From/To, Privacy; correct CLI presentation per E.164.</li>
-            </ul>
-          </div>
-        </div>
-        <div class="grid" style="margin-top: 24px;">
-          <div class="col-6 card">
-            <h3>Arhitectură & Protocoale [RO]</h3>
-            <ul class="list">
-              <li><strong>Securitate:</strong> TLS 1.2+, SRTP (AES_CM_128_HMAC_SHA1_80/32), DTLS-SRTP, certificate CA.</li>
-              <li><strong>NAT traversal:</strong> Media anchoring (SBC), symmetric RTP, rport, keepalive (OPTIONS).</li>
-              <li><strong>Timere:</strong> Session-Expires (RFC4028), re-INVITE/UPDATE, 100rel (PRACK) pentru early media.</li>
-              <li><strong>DTMF:</strong> RTP events (RFC2833/4733) recomandat; alternativ SIP INFO.</li>
-              <li><strong>QoS:</strong> DSCP EF (46) pentru RTP, CS3/AF31 pentru SIP; jitter buffer adaptiv.</li>
-              <li><strong>Redundanță:</strong> DNS SRV/A cu priorități/weight; terminări multiple; failover la pierdere OPTIONS.</li>
-              <li><strong>Interconectare:</strong> IP allow-list sau autentificare digest; rate limiting CPS.</li>
-              <li><strong>Fax:</strong> T.38 sau G.711 pass-through (ptime 20, fără transcoding).</li>
-              <li><strong>Codec:</strong> G.711 A/µ-law, G.729, Opus (opțional); evităm transcodarea.</li>
-            </ul>
-          </div>
-          <div class="col-6 card">
-            <h3>Architecture & Protocols [EN]</h3>
-            <ul class="list">
-              <li><strong>Security:</strong> TLS 1.2+, SRTP (AES_CM_128_HMAC_SHA1_80/32), DTLS-SRTP, trusted CA certs.</li>
-              <li><strong>NAT traversal:</strong> Media anchoring (SBC), symmetric RTP, rport, OPTIONS keepalives.</li>
-              <li><strong>Timers:</strong> Session-Expires (RFC4028), re-INVITE/UPDATE, 100rel (PRACK) for early media.</li>
-              <li><strong>DTMF:</strong> RFC2833/4733 recommended; optional SIP INFO.</li>
-              <li><strong>QoS:</strong> DSCP EF (46) for RTP, CS3/AF31 for SIP; adaptive jitter buffer.</li>
-              <li><strong>Redundancy:</strong> DNS SRV/A priorities/weights; multiple terminations; failover on OPTIONS loss.</li>
-              <li><strong>Interconnect:</strong> IP allow-list or digest auth; CPS rate limits.</li>
-              <li><strong>Fax:</strong> T.38 or G.711 pass-through (ptime 20, no transcoding).</li>
-              <li><strong>Codec:</strong> G.711 A/µ-law, G.729, Opus (optional); we avoid transcoding.</li>
+              <li>
+                <span class="lang-ro"><strong>Securitate:</strong> TLS 1.2+, SRTP (AES_CM_128), DTLS-SRTP.</span>
+                <span class="lang-en"><strong>Security:</strong> TLS 1.2+, SRTP (AES_CM_128), DTLS-SRTP.</span>
+              </li>
+              <li>
+                <span class="lang-ro"><strong>NAT traversal:</strong> Media anchoring (SBC), symmetric RTP, rport, OPTIONS.</span>
+                <span class="lang-en"><strong>NAT traversal:</strong> Media anchoring (SBC), symmetric RTP, rport, OPTIONS.</span>
+              </li>
+              <li>
+                <span class="lang-ro"><strong>DTMF:</strong> RTP events (RFC2833/4733) recomandat.</span>
+                <span class="lang-en"><strong>DTMF:</strong> RFC2833/4733 recommended.</span>
+              </li>
+              <li>
+                <span class="lang-ro"><strong>QoS:</strong> DSCP EF (46) pentru RTP, CS3/AF31 pentru SIP.</span>
+                <span class="lang-en"><strong>QoS:</strong> DSCP EF (46) for RTP, CS3/AF31 for SIP.</span>
+              </li>
+              <li>
+                <span class="lang-ro"><strong>Redundanță:</strong> DNS SRV, terminări multiple, failover OPTIONS.</span>
+                <span class="lang-en"><strong>Redundancy:</strong> DNS SRV, multiple terminations, OPTIONS failover.</span>
+              </li>
+              <li>
+                <span class="lang-ro"><strong>Fax:</strong> T.38 sau G.711 pass-through (ptime 20).</span>
+                <span class="lang-en"><strong>Fax:</strong> T.38 or G.711 pass-through (ptime 20).</span>
+              </li>
+              <li>
+                <span class="lang-ro"><strong>Codec:</strong> G.711 A/µ-law, G.729, Opus (opțional).</span>
+                <span class="lang-en"><strong>Codec:</strong> G.711 A/µ-law, G.729, Opus (optional).</span>
+              </li>
             </ul>
           </div>
         </div>
@@ -250,51 +391,81 @@
     
     <section id="faq">
       <div class="container card">
-        <h2>Întrebări Frecvente / FAQ</h2>
+        <h2>
+          <span class="lang-ro">Întrebări Frecvente</span>
+          <span class="lang-en">Frequently Asked Questions</span>
+        </h2>
         
-        <h3>[RO] Cum funcționează prețurile?</h3>
-        <p>Modelul nostru de prețuri este flexibil, adaptat volumului și nevoilor dvs. Oferim planuri bazate pe canal (capacitate concurentă, ex. 10 apeluri simultane) și planuri "pay-as-you-go" (la minut). Contactați-ne pentru o ofertă personalizată.</p>
-        <h3>[EN] How does pricing work?</h3>
-        <p>Our pricing model is flexible, tailored to your volume and needs. We offer per-channel (concurrent capacity, e.g., 10 simultaneous calls) plans and pay-as-you-go (per-minute) plans. Contact us for a personalized quote.</p>
+        <h3>
+          <span class="lang-ro">Cum funcționează prețurile?</span>
+          <span class="lang-en">How does pricing work?</span>
+        </h3>
+        <p>
+          <span class="lang-ro">Modelul nostru de prețuri este flexibil, adaptat volumului și nevoilor dvs. Oferim planuri bazate pe canal (capacitate concurentă, ex. 10 apeluri simultane) și planuri "pay-as-you-go" (la minut). Contactați-ne pentru o ofertă personalizată.</span>
+          <span class="lang-en">Our pricing model is flexible, tailored to your volume and needs. We offer per-channel (concurrent capacity, e.g., 10 simultaneous calls) plans and pay-as-you-go (per-minute) plans. Contact us for a personalized quote.</span>
+        </p>
 
-        <h3>[RO] Ce fel de conexiune la internet este necesară?</h3>
-        <p>Serviciile noastre funcționează excelent peste internetul public (Over-the-Top). Pentru clienții enterprise și operatori, recomandăm și oferim interconectări private (VPN, L2) pentru a garanta calitatea serviciului (QoS) end-to-end.</p>
-        <h3>[EN] What kind of internet connection is needed?</h3>
-        <p>Our services work excellently over the public internet (Over-the-Top). For enterprise and operator clients, we recommend and offer private interconnects (VPN, L2) to guarantee end-to-end Quality of Service (QoS).</p>
+        <h3>
+          <span class="lang-ro">Ce fel de conexiune la internet este necesară?</span>
+          <span class="lang-en">What kind of internet connection is needed?</span>
+        </h3>
+        <p>
+          <span class="lang-ro">Serviciile noastre funcționează excelent peste internetul public (Over-the-Top). Pentru clienții enterprise și operatori, recomandăm și oferim interconectări private (VPN, L2) pentru a garanta calitatea serviciului (QoS) end-to-end.</span>
+          <span class="lang-en">Our services work excellently over the public internet (Over-the-Top). For enterprise and operator clients, we recommend and offer private interconnects (VPN, L2) to guarantee end-to-end Quality of Service (QoS).</span>
+        </p>
 
-        <h3>[RO] Este compatibil cu 3CX / FreePBX / Asterisk?</h3>
-        <p>Da. Platforma noastră este testată și perfect compatibilă cu toate centralele IP majore. Oferim ghiduri de configurare și suport direct pentru a asigura o integrare rapidă. Parametri tipici: transport TLS, SRV activ, auth IP sau digest, DTMF RFC2833, ptime=20.</p>
-        <h3>[EN] Is it compatible with 3CX / FreePBX / Asterisk?</h3>
-        <p>Yes. Our platform is tested and fully compatible with all major IP-PBX systems. We provide configuration guides and direct support to ensure a fast integration. Typical params: TLS transport, SRV on, IP or digest auth, RFC2833 DTMF, ptime=20.</p>
+        <h3>
+          <span class="lang-ro">Este compatibil cu 3CX / FreePBX / Asterisk?</span>
+          <span class="lang-en">Is it compatible with 3CX / FreePBX / Asterisk?</span>
+        </h3>
+        <p>
+          <span class="lang-ro">Da. Platforma noastră este testată și perfect compatibilă cu toate centralele IP majore. Oferim ghiduri de configurare și suport direct pentru a asigura o integrare rapidă. Parametri tipici: transport TLS, SRV activ, auth IP sau digest, DTMF RFC2833, ptime=20.</span>
+          <span class="lang-en">Yes. Our platform is tested and fully compatible with all major IP-PBX systems. We provide configuration guides and direct support to ensure a fast integration. Typical params: TLS transport, SRV on, IP or digest auth, RFC2833 DTMF, ptime=20.</span>
+        </p>
 
-        <h3>[RO] Oferiți failover și redundanță?</h3>
-        <p>Absolut. Redundanța este în centrul arhitecturii noastre. Oferim multiple puncte de terminare (gateway-uri) în locații diferite și folosim DNS SRV pentru failover automat. Monitorizăm activ starea trunchiurilor folosind OPTIONS keepalive.</p>
-        <h3>[EN] Do you offer failover & redundancy?</h3>
-        <p>Absolutely. Redundancy is core to our architecture. We provide multiple termination points (gateways) in different locations and use DNS SRV for automatic failover. We actively monitor trunk health using OPTIONS keepalives.</p>
+        <h3>
+          <span class="lang-ro">Oferiți failover și redundanță?</span>
+          <span class="lang-en">Do you offer failover & redundancy?</span>
+        </h3>
+        <p>
+          <span class="lang-ro">Absolut. Redundanța este în centrul arhitecturii noastre. Oferim multiple puncte de terminare (gateway-uri) în locații diferite și folosim DNS SRV pentru failover automat. Monitorizăm activ starea trunchiurilor folosind OPTIONS keepalive.</span>
+          <span class="lang-en">Absolutely. Redundancy is core to our architecture. We provide multiple termination points (gateways) in different locations and use DNS SRV for automatic failover. We actively monitor trunk health using OPTIONS keepalives.</span>
+        </p>
       </div>
     </section>
 
     <section id="contact">
       <div class="container card">
-        <h2 class="section-title">Să Începem Proiectul Dvs. / Let's Start Your Project</h2>
-        <div class="grid">
-          <div class="col-7">
-            <p><strong>[RO]</strong> Echipa noastră de ingineri este gata să discute cerințele dvs. tehnice și de business. Vă rugăm să ne trimiteți un email cu cât mai multe detalii despre proiectul dvs., iar noi vom reveni cu o soluție personalizată și o ofertă de preț.</p>
-            <p class="muted"><strong>[EN]</strong> Our engineering team is ready to discuss your technical and business requirements. Please email us with as many details as possible about your project, and we will return with a tailored solution and a price quote.</p>
+        <h2 class="section-title">
+          <span class="lang-ro">Să Începem Proiectul Dvs.</span>
+          <span class="lang-en">Let's Start Your Project</span>
+        </h2>
+        <div class="contact-grid">
+          <div>
+            <p>
+              <span class="lang-ro">Echipa noastră de ingineri este gata să discute cerințele dvs. tehnice și de business. Vă rugăm să ne trimiteți un email cu cât mai multe detalii despre proiectul dvs., iar noi vom reveni cu o soluție personalizată și o ofertă de preț.</span>
+              <span class="lang-en">Our engineering team is ready to discuss your technical and business requirements. Please email us with as many details as possible about your project, and we will return with a tailored solution and a price quote.</span>
+            </p>
           </div>
-          <div class="col-5">
-            <p><strong>Includeți (dacă știți):</strong> / Include (if known):</p>
+          <div>
+            <p><strong>
+              <span class="lang-ro">Includeți (dacă știți):</span>
+              <span class="lang-en">Include (if known):</span>
+            </strong></p>
             <ul>
-              <li>Platforma (IP-PBX/SBC/3CX/CCaaS)</li>
-              <li>Canale simultane estimate</li>
-              <li>Nevoi de numerotație (geo/negeo/portări)</li>
-              <li>Cerințe de securitate (TLS/SRTP, VPN)</li>
-              <li>Adrese IP/ASN pentru interconectare</li>
+              <li><span class="lang-ro">Platforma (IP-PBX/SBC/3CX/CCaaS)</span><span class="lang-en">Platform type (IP-PBX/SBC/3CX/CCaaS)</span></li>
+              <li><span class="lang-ro">Canale simultane estimate</span><span class="lang-en">Estimated concurrent calls</span></li>
+              <li><span class="lang-ro">Nevoi de numerotație (geo/negeo/portări)</span><span class="lang-en">Numbering needs (geo/non-geo/porting)</span></li>
+              <li><span class="lang-ro">Cerințe de securitate (TLS/SRTP, VPN)</span><span class="lang-en">Security needs (TLS/SRTP, VPN)</span></li>
+              <li><span class="lang-ro">Adrese IP/ASN pentru interconectare</span><span class="lang-en">IPs/ASN for interconnect</span></li>
             </ul>
           </div>
         </div>
         <div class="cta-block">
-          <a class="cta" href="mailto:office@nodtel.com">Trimiteți un email la office@nodtel.com</a>
+          <a class="cta" href="mailto:office@nodtel.com">
+            <span class="lang-ro">Trimiteți un email la office@nodtel.com</span>
+            <span class="lang-en">Email us at office@nodtel.com</span>
+          </a>
         </div>
       </div>
     </section>
@@ -302,10 +473,94 @@
 
   <footer>
     <div class="container">
-      <div class="muted">Folosim infrastructura <a href="https://www.voxbee.ro" target="_blank" rel="noopener">Voxbee</a> pentru servicii de telefonie. / We use <a href="https://www.voxbee.ro" target="_blank" rel="noopener">Voxbee</a> infrastructure for telephony services.</div>
-      <div class="muted" style="margin-top:8px">© <span id="y"></span> NodTel • Soluții Avansate SIP & DID</div>
+      <div class="muted">
+        <span class="lang-ro">Folosim infrastructura <a href="https://www.voxbee.ro" target="_blank" rel="noopener">Voxbee</a> pentru servicii de telefonie.</span>
+        <span class="lang-en">We use <a href="https://www.voxbee.ro" target="_blank" rel="noopener">Voxbee</a> infrastructure for telephony services.</span>
+      </div>
+      <div class="muted" style="margin-top:8px">
+        © <span id="y"></span> NodTel • 
+        <span class="lang-ro">Soluții Avansate SIP & DID</span>
+        <span class="lang-en">Advanced SIP & DID Solutions</span>
+      </div>
     </div>
-    <script>document.getElementById('y').textContent = new Date().getFullYear();</script>
   </footer>
+
+  <script>
+    // Setează anul curent în footer
+    document.getElementById('y').textContent = new Date().getFullYear();
+
+    // Logica pentru comutarea limbii
+    document.addEventListener('DOMContentLoaded', () => {
+      const switcher = document.getElementById('lang-switcher');
+      const htmlEl = document.documentElement;
+
+      // Datele de limbă (pentru meta-taguri)
+      const langData = {
+        ro: {
+          title: "NodTel — SIP Trunks & Numere (DID) România | Soluții Voce B2B",
+          description: "NodTel oferă SIP Trunks și numere (DID) din România pentru companii și operatori. Fiabilitate carrier-grade, securitate avansată (TLS/SRTP) și suport tehnic specializat.",
+          ogLocale: "ro_RO"
+        },
+        en: {
+          title: "NodTel — SIP Trunks & Romanian DIDs | B2B Voice Solutions",
+          description: "NodTel provides Romanian SIP Trunks and DIDs for carriers and enterprises. Carrier-grade reliability, advanced security (TLS/SRTP), and expert technical support.",
+          ogLocale: "en_US"
+        }
+      };
+
+      // Funcție pentru actualizarea meta-tagurilor
+      function updateMeta(lang) {
+        const data = langData[lang];
+        document.title = data.title;
+        document.querySelector('meta[name="description"]').setAttribute('content', data.description);
+        // Puteți actualiza și og:title, og:description etc.
+        document.querySelector('meta[property="og:locale"]').setAttribute('content', data.ogLocale);
+      }
+
+      // Funcție pentru actualizarea textului butonului
+      function updateSwitcherText(currentLang) {
+        if (currentLang === 'ro') {
+          switcher.textContent = 'EN';
+          switcher.setAttribute('aria-label', 'Change to English');
+        } else {
+          switcher.textContent = 'RO';
+          switcher.setAttribute('aria-label', 'Schimbă în Română');
+        }
+      }
+
+      // Funcție pentru setarea limbii
+      function setLang(lang) {
+        htmlEl.lang = lang;
+        localStorage.setItem('lang', lang); // Salvează preferința
+        updateSwitcherText(lang);
+        updateMeta(lang);
+      }
+
+      // 1. Detectează limba inițială
+      function getInitialLang() {
+        const savedLang = localStorage.getItem('lang');
+        if (savedLang) {
+          return savedLang; // Folosește limba salvată
+        }
+
+        const browserLang = navigator.language.split('-')[0]; // 'ro-RO' -> 'ro'
+        if (browserLang === 'en') {
+          return 'en'; // Folosește engleza dacă e limba browserului
+        }
+        
+        return 'ro'; // Implicit, folosește româna
+      }
+
+      // 2. Setează starea inițială la încărcare
+      const initialLang = getInitialLang();
+      setLang(initialLang);
+
+      // 3. Adaugă evenimentul de click pe buton
+      switcher.addEventListener('click', () => {
+        const newLang = htmlEl.lang === 'ro' ? 'en' : 'ro';
+        setLang(newLang);
+      });
+    });
+  </script>
 </body>
 </html>
